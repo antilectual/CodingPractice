@@ -1,4 +1,4 @@
-//1313. Decompress Run-Length Encoded List
+//1313. Decompress Run-Length Encoded List (easy)
 class Solution {
 public:
     vector<int> decompressRLElist(vector<int>& nums) {
