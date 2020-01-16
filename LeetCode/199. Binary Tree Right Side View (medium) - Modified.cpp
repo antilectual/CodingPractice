@@ -13,37 +13,36 @@
  
  // *Current solution is incorrect.  Only follows the right most branch as far as it can, but left side can have deeper branches that would be visible.
  // Proposed solution: Get the depth of the full tree and then do Breath First Search, adding only the rightmost node per depth level.
+ // Current solution: Add every value from a specific level to an array for that level in order from left to right.  At each level, grab the value from the end of the array and add it to the final list.
 class Solution {
 public:
+	vector<vector <int>> treeByDepth;
     vector<int> rightSideView(TreeNode* root) {
         vector<int> outputList;
-        int depth = 0;
 		int maxDepth = getTreeHeight(root);
-		/*
-        if(root != NULL)
-        {
-			while(root->right != NULL || root->left != NULL)
-			{
-				outputList.push_back(root->val);
-				if(root->right != NULL)
-				{
-					root = root->right;
-				}
-				else
-				{
-					root = root->left;
-				}
-				depth++;
-			}
-            
-            // add the final leaf node
-            outputList.push_back(root->val);
-        }
-		cout << maxDepth << endl;
-		*/
-		outputList.push_back(maxDepth);
+		treeByDepth.resize(maxDepth);
+		SearchForRightValues(root, maxDepth);
+        // maxDepth -1 is the root level and decreases going down to the tree. the deepest leaf is at level 0;
+		for(int i = maxDepth -1; i >= 0; i--)
+		{
+			outputList.push_back(treeByDepth[i].back());
+		}
         return outputList;
     }
+	
+	// Adds values based on level. Traverses from left to right, so the last value added will be what is seen for that level.
+    // maxDepth - 1 = root. 
+	void SearchForRightValues(TreeNode *current, int depth)
+	{
+		if(depth == 0 || current == NULL)
+		{
+			return;
+		}
+		treeByDepth[depth-1].push_back(current->val); 
+		SearchForRightValues(current->left, depth-1);
+		SearchForRightValues(current->right, depth-1);
+		return;
+	}
 	
 	int getTreeHeight(TreeNode *top)
 	{
