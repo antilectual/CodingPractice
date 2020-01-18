@@ -1,5 +1,5 @@
 // 938. Range Sum of BST (easy)
-// Brute Force Method by checking every value in the binary tree.
+// Faster - Prevent useless directional tree travel
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -22,8 +22,8 @@ public:
         {
             sumResult += root->val;
         }
-        sumResult += rangeSumBST(root->left, L, R);
-        sumResult += rangeSumBST(root->right, L, R);
+        if(root->val > L) {sumResult += rangeSumBST(root->left, L, R);}
+        if(root->val < R) {sumResult += rangeSumBST(root->right, L, R);}
         return sumResult;
     }
 };
