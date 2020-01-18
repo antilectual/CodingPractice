@@ -22,7 +22,6 @@ public:
         {
             sumResult += root->val;
         }
-        int x = root->val;
         sumResult += rangeSumBST(root->left, L, R);
         sumResult += rangeSumBST(root->right, L, R);
         return sumResult;
