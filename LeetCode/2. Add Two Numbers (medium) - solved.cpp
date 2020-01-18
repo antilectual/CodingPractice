@@ -1,4 +1,4 @@
-// LeetCode problem 2. Add Two Numbers (medium)
+// 2. Add Two Numbers (medium)
 
 /**
  * Definition for singly-linked list.
@@ -36,8 +36,8 @@ public:
         while(tempL1 != NULL && tempL2 != NULL)
         {
             currentDigit = tempL1->val + tempL2->val;
-            tempResultNode->next = new ListNode(currentDigit % 10 + carry);
-            carry = currentDigit / 10;
+            tempResultNode->next = new ListNode((currentDigit + carry) % 10 );
+            carry = (currentDigit + carry) / 10;
             tempL1 = tempL1->next;
             tempL2 = tempL2->next;
             tempResultNode = tempResultNode->next;
