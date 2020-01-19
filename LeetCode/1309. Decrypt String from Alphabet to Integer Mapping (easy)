@@ -1,0 +1,35 @@
+// Leetcode 1309. Decrypt String from Alphabet to Integer Mapping (easy)
+// Algorithm - Iterates the string converting substrings to numbers.  If there is a # 2 digits ahead, the current is a 2 digit number.  Otherwise, it is a single digit number.
+// Naively assumes valid input. (e.g. A value of 35 is > 26 and will cause an OOB exception)
+class Solution {
+public:
+    string freqAlphabets(string s) {
+        vector<char> alphabetVector;
+        string result;
+        
+        // create alphabet
+        char curChar = 'a';
+        for(int i = 0; i<26; i++)
+        {
+            alphabetVector.push_back(curChar);
+            curChar++;
+        }
+
+        for(int i = 0; i<s.size(); i++)
+        {
+            // short circuited if statement - making sure there isn't % 2 spaces ahead
+            if(!(i+2 < s.size() && s[i + 2] == '#'))
+            {
+                result = result + alphabetVector[stoi(s.substr(i, 1)) - 1];
+            }
+            else
+            {
+                string newDigit = s.substr(i, 2);
+                int mapLoc = stoi(newDigit);
+                result = result + alphabetVector[mapLoc - 1];
+                i+=2;
+            }
+        }
+        return result;
+    }
+};
