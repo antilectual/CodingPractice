@@ -2,23 +2,13 @@
 
 // Algorithm - Iterates through the words building the morse code version and adds it to the map (where the index is the morse code word)
 //             The map will have a size() that is equal to the number of unique morse code words added which is returned.
+// 2019/1/20 - Update: No longer parsing the string to create the vector
 class Solution {
 public:
     int uniqueMorseRepresentations(vector<string>& words) 
     {
-        string commaDelimitedMorseLetters =
-            ".-,-...,-.-.,-..,.,..-.,--.,....,..,.---,-.-,.-..,--,-.,---,.--.,--.-,.-.,...,-,..-,...-,.--,-..-,-.--,--..,";
-        vector<string> morseLetters;
-        int lastStart = 0;
-        // Build a vector of the morse code alphabet. Find a comma delimter and add all characters between it and the previous comma.
-        for(int i = 0; i < commaDelimitedMorseLetters.size(); i++)
-        {
-            if(commaDelimitedMorseLetters[i] == ',')
-            {
-                morseLetters.push_back(commaDelimitedMorseLetters.substr(lastStart, i-lastStart));
-                lastStart = i + 1;
-            }
-        }
+        
+        vector<string> morseLetters =         {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
         unordered_map<string, string> transformations;
         string stringBuild;
         
