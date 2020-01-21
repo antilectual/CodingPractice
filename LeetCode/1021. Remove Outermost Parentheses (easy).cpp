@@ -1,57 +1,58 @@
 // Leetcode 1021. Remove Outermost Parentheses (easy)
 
 // Algorithm - Finds outer opening parenthesis. Matches following opening parenthesis to closing parenthesis until it finds  a closing without a matched opening which will be the closing to an outer opening parenthesis.
-// VERY naively assumes string input is valid.
+// Optimizations: Matching changed from utilizing a stack, to a simple count comparison of open vs closed parenthesis.
+// Optimization: String concatenations done only when finding closing outer parenthesis. Concatenates a substring instead of char by char.
 class Solution {
 public:
     string removeOuterParentheses(string S) {
-        //vector<char> outerParenStack;
-        //vector<char> innerParenStack;
         bool foundOuter = false;
-        vector<char> parenStack;
+        int openParenCount = 0;
+        int subStringSize = 0;
+        int subStringStart = 1;
         string resultStr;
         for(int i = 0; i < S.size(); i++)
         {
             // case where we find the opening of an outer parenthesis i.e expecting '(' with no '(' previously stored.
-            if(parenStack.empty() && !foundOuter)
+            if(!openParenCount && !foundOuter)
             {
-                if(S[i] == '(') // if statement shouldn't be necessary. If all are matched, next should always be '('
-                {
-                    foundOuter = true;
-                }
+                foundOuter = true;
+                subStringStart = i + 1;
+                subStringSize = 0;
             }
             // case where we only have an outer parenthesis.  If we find a closing, we have a matching outer and we reset.
-            // otherwise we add a new opening parenthesis to the stack and the stack is no longer empty.
-            else if(parenStack.empty())
+            // otherwise we increment the count of open parenthesis found.
+            else if(!openParenCount)
             {
                 // found closing outer
                 if(S[i] == ')')
                 {
-                    foundOuter = false;    
+                    foundOuter = false;
+                    resultStr = resultStr + S.substr(subStringStart, subStringSize);
                 }
-                // push new opening to stack and adding to the string
+                // opening parenthesis part of result.
                 else
                 {
-                    parenStack.push_back(S[i]);
-                    resultStr = resultStr + S[i];
+                    openParenCount++;
+                    subStringSize++;
                 }
             }
-            // case where the stack isn't empty: i.e. we are not looking for a closing outer parenthesis.
-            // must be part of the string. push/pop based on if we are matching. 
-            // Naively assumes valid string where ')' matches  to appropraite'('
+            // case where the count isn't 0: i.e. we are not looking for a closing outer parenthesis.
+            // must be part of the string. increment/decrement count based on if we are matching. 
+            // Increments substring size as this substring must be part of the final string.
             else
             {
-                // push opening parenthesis
+                // increment opening parenthesis
                 if(S[i] == '(')
                 {
-                    parenStack.push_back(S[i]);
+                    openParenCount++;
                 }
-                // pop on closing parenthesis
+                // decrement on closing parenthesis
                 else
                 {
-                    parenStack.pop_back();
+                    openParenCount--;
                 }
-                resultStr = resultStr + S[i];
+                subStringSize++;
             }
         }
         return resultStr;
