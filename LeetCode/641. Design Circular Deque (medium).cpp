@@ -58,7 +58,8 @@ public:
         {
             return false;
         }
-        _head += 1;
+        // bugfix: forgot to wrap head
+        _head = (_head + 1) % _size;
         
         if(_head == _tail) // dequeued until empty - set sempty
         {
