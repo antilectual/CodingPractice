@@ -1,5 +1,11 @@
 // LeetCode problem 1261. Find Elements in a Contaminated Binary Tree (medium)
-// Brute Force solution
+// Updated: Optimized better for speed.
+//
+//    root.val == 0
+//    If treeNode.val == x and treeNode.left != null, then treeNode.left.val == 2 * x + 1
+//    If treeNode.val == x and treeNode.right != null, then treeNode.right.val == 2 * x + 2
+// Note: This is equivalent to numbering the nodes in the tree starting with root = 0, root->left = 1, root->right = 2, etc.
+
 
 /**
  * Definition for a binary tree node.
@@ -14,58 +20,55 @@ class FindElements {
 private:
 	TreeNode* _root;
     int _target = -1;
+	vector<bool> fullTree;
 public:
+    
+    // Reconstructs the binary tree. Root starts at 0.
     FindElements(TreeNode* root) {
         _root = root;
         if(_root != NULL)
         {
-            _root->val = 0;
-            repairNode(root->left, _root->val, true);
-            repairNode(root->right, _root->val, false);
+            fullTree.resize(3,0);
+            fullTree[0] = _root->val = 0;
+            repairNode(root->left, 0, true);
+            repairNode(root->right, 0, false);
         }
     }
     
+    // Recursively iterates the tree and stores whether the node's value exists by using a boolean array where the node value = index.
     void repairNode(TreeNode * currNode, int x, bool isLeft)
     {
         if(currNode != NULL)
         {
+            int val = -1;
             if(isLeft)
             {
-                currNode->val = 2*x + 1;     
+                val = 2*x+1;                
             }
             else
             {
-                currNode->val = 2*x + 2;
+                val = 2*x+2;
             }
-            
-            repairNode(currNode->left, currNode->val, true);
-            repairNode(currNode->right, currNode->val, false);
+            // bugfix = + 1 more element to ensure size is enough.
+            if(fullTree.size() < 2*x+3)
+            {
+                fullTree.resize(2*x+3, 0);
+            }
+            fullTree[val] = true;
+            repairNode(currNode->left, val, true);
+            repairNode(currNode->right, val, false);
         }
     }
     
+    // Returns if the target value exists in the tree.  If it does exist, the value at the index = target will be true.
     bool find(int target) {
-        _target = target;
-        return findHelper(_root);
-    }
-    
-    bool findHelper(TreeNode* currNode)
-    {
-        if(currNode == NULL)
+        if(target < fullTree.size())
         {
-            return false;
+            return fullTree[target];
         }
-        else
-        {
-            if(currNode->val == _target)
-            {
-                return true;
-            }
-            else
-            {
-                return findHelper(currNode->left) || findHelper(currNode->right);
-            }
-        }
+        return false;
     }
+
 };
 
 /**
