@@ -11,9 +11,10 @@
  * };
  */
 class FindElements {
-public:
-    TreeNode* _root;
+private:
+	TreeNode* _root;
     int _target = -1;
+public:
     FindElements(TreeNode* root) {
         _root = root;
         if(_root != NULL)
