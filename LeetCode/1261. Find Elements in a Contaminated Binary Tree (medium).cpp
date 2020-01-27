@@ -21,20 +21,7 @@ private:
 	TreeNode* _root;
     int _target = -1;
 	vector<bool> fullTree;
-public:
-    
-    // Reconstructs the binary tree. Root starts at 0.
-    FindElements(TreeNode* root) {
-        _root = root;
-        if(_root != NULL)
-        {
-            fullTree.resize(3,0);
-            fullTree[0] = _root->val = 0;
-            repairNode(root->left, 0, true);
-            repairNode(root->right, 0, false);
-        }
-    }
-    
+	  
     // Recursively iterates the tree and stores whether the node's value exists by using a boolean array where the node value = index.
     void repairNode(TreeNode * currNode, int x, bool isLeft)
     {
@@ -57,6 +44,20 @@ public:
             fullTree[val] = true;
             repairNode(currNode->left, val, true);
             repairNode(currNode->right, val, false);
+        }
+    }
+	
+public:
+    
+    // Reconstructs the binary tree. Root starts at 0.
+    FindElements(TreeNode* root) {
+        _root = root;
+        if(_root != NULL)
+        {
+            fullTree.resize(3,0);
+            fullTree[0] = _root->val = 0;
+            repairNode(root->left, 0, true);
+            repairNode(root->right, 0, false);
         }
     }
     
