@@ -11,6 +11,7 @@
 class Solution:
     elementsList = []
     def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
+        self.elementsList = []
         self.getElementsFromSingleRoot(root1)
         self.getElementsFromSingleRoot(root2)
         self.elementsList.sort()
