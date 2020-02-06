@@ -1,4 +1,4 @@
-# LeetCode Problem 700. Search in a Binary Search Tree
+# LeetCode Problem 700. Search in a Binary Search Tree (easy)
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -9,12 +9,10 @@
 
 class Solution:
     def searchBST(self, root: TreeNode, val: int) -> TreeNode:
-        current = root
-        while(current != None):
-            if(current.val == val):
-                return current
-            elif(val < current.val):
-                current = current.left
-            else:
-                current = current.right
-        return current
+        if(root == None or root.val == val):
+            return root
+        elif(val < root.val):
+            return self.searchBST(root.left, val)
+        else:
+            return self.searchBST(root.right, val)
+            
