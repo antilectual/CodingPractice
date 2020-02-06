@@ -8,6 +8,8 @@
 #         self.right = None
 
 # Algorithm: Naive solution: Add all elements to a list and then sort the list using pythons TimSort.
+# Updates:  Fix to ensure elementsList is cleared for each call of getAllElements.
+#           Preorder traversal changed to inorder traversal so that each list is created in sorted order to help speed up sorting.
 class Solution:
     elementsList = []
     def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
@@ -21,7 +23,7 @@ class Solution:
         if(root == None):
             return
         else:
-            self.elementsList.append(root.val)
             self.getElementsFromSingleRoot(root.left)
+            self.elementsList.append(root.val)
             self.getElementsFromSingleRoot(root.right)
             
