@@ -3,6 +3,7 @@
 
 class Solution:
     def validPalindrome(self, s: str) -> bool:
+        maxSkip = 1
         skipCount = 0
         leftPtr = 0
         rightPtr = len(s)-1
@@ -10,7 +11,7 @@ class Solution:
             if s[leftPtr] == s[rightPtr]:                               # Case: Palindrome property still holds true
                 leftPtr += 1
                 rightPtr -= 1
-            elif s[leftPtr+1] == s[rightPtr] and skipCount == 0:        # Case: Delete left corrects palindrome sequence
+            elif s[leftPtr+1] == s[rightPtr] and skipCount < maxSkip:   # Case: Delete left corrects palindrome sequence
                 if leftPtr + 2 > rightPtr - 1:                          # End of Palindrome
                     return True
                 elif s[leftPtr+2] == s[rightPtr-1]:                     # Continue
@@ -28,7 +29,7 @@ class Solution:
                         return False                                    # Delete left fails on next, delete right fails on next = full fail
                 else:
                     return False                                        # Delete left fails on next, delete right fails = full fail
-            elif s[leftPtr] == s[rightPtr -1] and skipCount == 0:       # Case: Delete right corrects palindrome sequence
+            elif s[leftPtr] == s[rightPtr -1] and skipCount < maxSkip:  # Case: Delete right corrects palindrome sequence
                 if leftPtr > rightPtr -2:
                     return True
                 elif s[leftPtr+1] == s[rightPtr-2]:
@@ -40,7 +41,7 @@ class Solution:
             else:                                                       # Delete left or right cannot correct palindrome
                 return False
                 
-            if skipCount > 1:                                           # Too many deletes required
+            if skipCount > maxSkip:                                     # Too many deletes required
                 return False
         
         return True
