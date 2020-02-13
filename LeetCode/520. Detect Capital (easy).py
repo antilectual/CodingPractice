@@ -3,6 +3,7 @@
 #            For not using built-ins could iterate the characters in the word to test all within the bounds of upper case, 
 #            or all except first are within the bounds of lower case ASCII.
 #            All empty and 1 character strings are valid.
+#            Re-ordered test cases to improve average times (hopefully)
 class Solution:
     def detectCapitalUse(self, word: str) -> bool:
-        return word.isupper() or word[1:].islower() or len(word) < 2
+        return len(word) < 2 or word[1:].islower() or word.isupper()
