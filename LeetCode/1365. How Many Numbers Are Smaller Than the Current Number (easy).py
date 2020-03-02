@@ -1,5 +1,5 @@
-# LeetCode problem 1365. How Many Numbers Are Smaller Than the Current Number (easy)
-# Algorithm: Make a sorted copy of the list of numbers, then iterate the original list counting how many in the sorted list are smaller.
+# LeetCode problem 1365. How Many Numbers Are Smaller Than the Current Number
+# Algorithm: Make a 101 buckets to count how many of each value there is (between 0 and 100 inclusive). Iterate nums and count the values in the buckets less than the current value and add the count to the results list.
 
 class Solution:
     def smallerNumbersThanCurrent(self, nums: List[int]) -> List[int]:
@@ -8,12 +8,12 @@ class Solution:
         elif nums == []:
             return 
         result = []
-        sortedNums = sorted(nums)
+        buckets = [0 for i in range(101)]
+        for x in nums:
+            buckets[x] += 1
         for x in nums:
             count = 0
-            curr = sortedNums[0]
-            while curr < x:
-                count += 1
-                curr = sortedNums[count]
+            for i in range(x):
+                count += buckets[i]
             result.append(count)
         return result
