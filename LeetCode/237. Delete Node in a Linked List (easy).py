@@ -1,5 +1,5 @@
 # LeetCode problem 237. Delete Node in a Linked List (easy)
-# Algorithm: Delete current node by recursively copying the next node into the current until there are no nodes left.
+# Algorithm: Copy the next node into the current node and delete the next node.
 
 # Definition for singly-linked list.
 # class ListNode:
@@ -17,6 +17,4 @@ class Solution:
             return
         if node.next != None:
             node.val = node.next.val
-            if node.next.next == None:
-                node.next = None
-            self.deleteNode(node.next)
+            node.next = node.next.next
