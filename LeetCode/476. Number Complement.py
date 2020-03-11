@@ -1,5 +1,5 @@
-# LeetCode problem 1009. Complement of Base 10 Integer
-# LeetCode problem 476. Number Complement
+# LeetCode problem 1009. Complement of Base 10 Integer (easy)
+# LeetCode problem 476. Number Complement (easy)
 
 # Algorithm: XOR each bit from least significant to most significant bit and add to the result.
 
